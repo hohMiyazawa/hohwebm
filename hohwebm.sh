@@ -27,17 +27,21 @@ if [[ $1 == "--version" ]] || [[ $1 == "-version" ]]; then
 	echo "a tool for encoding short AV1 webms"
 	exit
 fi
+
+# TODO make universal:
+extras="$5 $6 $7 $8"
+
 profile=${4-default}
 if [[ $profile == "anilist" ]]; then
 	# likely to be animation, so --lag-in-frames=24
-	ffmpeg -hide_banner -loglevel error -y -i "$1" -vf "scale='min(640,iw)':'min(480,ih)'" -ss "$2" -to "$3" -strict -1 -f yuv4mpegpipe - | aomenc - --passes=2 --pass=1 --threads=6 --cpu-used=4 --bit-depth=10 --tile-columns=1 --end-usage=q --lag-in-frames=24 --webm --cq-level=30 --fpf=tmp_hohlogfile.log --output=NUL
-	ffmpeg -hide_banner -loglevel error -y -i "$1" -vf "scale='min(640,iw)':'min(480,ih)'" -ss "$2" -to "$3" -strict -1 -f yuv4mpegpipe - | aomenc - --passes=2 --pass=2 --threads=6 --cpu-used=4 --bit-depth=10 --tile-columns=1 --end-usage=q --lag-in-frames=24 --webm --cq-level=30 --fpf=tmp_hohlogfile.log --output="$1"."$2"-"$3".webm
+	ffmpeg -hide_banner -loglevel error -y -i "$1" -vf "scale='min(640,iw)':'min(480,ih)'" -ss "$2" -to "$3" -strict -1 -f yuv4mpegpipe - | aomenc - --passes=2 --pass=1 --threads=6 --cpu-used=4 --bit-depth=10 --tile-columns=1 --end-usage=q --lag-in-frames=24 --webm --cq-level=30 --fpf=tmp_hohlogfile.log $extras --output=NUL
+	ffmpeg -hide_banner -loglevel error -y -i "$1" -vf "scale='min(640,iw)':'min(480,ih)'" -ss "$2" -to "$3" -strict -1 -f yuv4mpegpipe - | aomenc - --passes=2 --pass=2 --threads=6 --cpu-used=4 --bit-depth=10 --tile-columns=1 --end-usage=q --lag-in-frames=24 --webm --cq-level=30 --fpf=tmp_hohlogfile.log $extras --output="$1"."$2"-"$3".webm
 	rm tmp_hohlogfile.log
 fi
 if [[ $profile == "anilist_sound" ]]; then
 	# likely to be animation, so --lag-in-frames=24
-	ffmpeg -hide_banner -loglevel error -y -i "$1" -vf "scale='min(640,iw)':'min(480,ih)'" -ss "$2" -to "$3" -strict -1 -f yuv4mpegpipe - | aomenc - --passes=2 --pass=1 --threads=6 --cpu-used=4 --bit-depth=10 --tile-columns=1 --end-usage=q --lag-in-frames=24 --webm --cq-level=30 --fpf=tmp_hohlogfile.log --output=NUL
-	ffmpeg -hide_banner -loglevel error -y -i "$1" -vf "scale='min(640,iw)':'min(480,ih)'" -ss "$2" -to "$3" -strict -1 -f yuv4mpegpipe - | aomenc - --passes=2 --pass=2 --threads=6 --cpu-used=4 --bit-depth=10 --tile-columns=1 --end-usage=q --lag-in-frames=24 --webm --cq-level=30 --fpf=tmp_hohlogfile.log --output=tmp_"$1"."$2"-"$3".webm
+	ffmpeg -hide_banner -loglevel error -y -i "$1" -vf "scale='min(640,iw)':'min(480,ih)'" -ss "$2" -to "$3" -strict -1 -f yuv4mpegpipe - | aomenc - --passes=2 --pass=1 --threads=6 --cpu-used=4 --bit-depth=10 --tile-columns=1 --end-usage=q --lag-in-frames=24 --webm --cq-level=30 --fpf=tmp_hohlogfile.log $extras --output=NUL
+	ffmpeg -hide_banner -loglevel error -y -i "$1" -vf "scale='min(640,iw)':'min(480,ih)'" -ss "$2" -to "$3" -strict -1 -f yuv4mpegpipe - | aomenc - --passes=2 --pass=2 --threads=6 --cpu-used=4 --bit-depth=10 --tile-columns=1 --end-usage=q --lag-in-frames=24 --webm --cq-level=30 --fpf=tmp_hohlogfile.log $extras --output=tmp_"$1"."$2"-"$3".webm
 	rm tmp_hohlogfile.log
 	ffmpeg -hide_banner -loglevel error -i "$1" -ss "$2" -to "$3" -strict -2 -b:a 96k tmp_hohaudio.opus
 	ffmpeg -hide_banner -loglevel error -i tmp_"$1"."$2"-"$3".webm -i tmp_hohaudio.opus -c:v copy -c:a copy "$1"."$2"-"$3".webm
@@ -45,13 +49,13 @@ if [[ $profile == "anilist_sound" ]]; then
 	rm tmp_hohaudio.opus
 fi
 if [[ $profile == "default" ]]; then
-	ffmpeg -hide_banner -loglevel error -y -i "$1" -vf "scale=-1:'min(720,ih)'" -ss "$2" -to "$3" -strict -1 -f yuv4mpegpipe - | aomenc - --passes=2 --pass=1 --threads=6 --cpu-used=4 --bit-depth=10 --tile-columns=1 --end-usage=q --lag-in-frames=19 --webm --cq-level=30 --fpf=tmp_hohlogfile.log --output=NUL
-	ffmpeg -hide_banner -loglevel error -y -i "$1" -vf "scale=-1:'min(720,ih)'" -ss "$2" -to "$3" -strict -1 -f yuv4mpegpipe - | aomenc - --passes=2 --pass=2 --threads=6 --cpu-used=4 --bit-depth=10 --tile-columns=1 --end-usage=q --lag-in-frames=19 --webm --cq-level=30 --fpf=tmp_hohlogfile.log --output="$1"."$2"-"$3".webm
+	ffmpeg -hide_banner -loglevel error -y -i "$1" -vf "scale=-1:'min(720,ih)'" -ss "$2" -to "$3" -strict -1 -f yuv4mpegpipe - | aomenc - --passes=2 --pass=1 --threads=6 --cpu-used=4 --bit-depth=10 --tile-columns=1 --end-usage=q --lag-in-frames=19 --webm --cq-level=30 --fpf=tmp_hohlogfile.log $extras --output=NUL
+	ffmpeg -hide_banner -loglevel error -y -i "$1" -vf "scale=-1:'min(720,ih)'" -ss "$2" -to "$3" -strict -1 -f yuv4mpegpipe - | aomenc - --passes=2 --pass=2 --threads=6 --cpu-used=4 --bit-depth=10 --tile-columns=1 --end-usage=q --lag-in-frames=19 --webm --cq-level=30 --fpf=tmp_hohlogfile.log $extras --output="$1"."$2"-"$3".webm
 	rm tmp_hohlogfile.log
 fi
 if [[ $profile == "default_sound" ]]; then
-	ffmpeg -hide_banner -loglevel error -y -i "$1" -vf "scale=-1:'min(720,ih)'" -ss "$2" -to "$3" -strict -1 -f yuv4mpegpipe - | aomenc - --passes=2 --pass=1 --threads=6 --cpu-used=4 --bit-depth=10 --tile-columns=1 --end-usage=q --lag-in-frames=19 --webm --cq-level=30 --fpf=tmp_hohlogfile.log --output=NUL
-	ffmpeg -hide_banner -loglevel error -y -i "$1" -vf "scale=-1:'min(720,ih)'" -ss "$2" -to "$3" -strict -1 -f yuv4mpegpipe - | aomenc - --passes=2 --pass=2 --threads=6 --cpu-used=4 --bit-depth=10 --tile-columns=1 --end-usage=q --lag-in-frames=19 --webm --cq-level=30 --fpf=tmp_hohlogfile.log --output=tmp_"$1"."$2"-"$3".webm
+	ffmpeg -hide_banner -loglevel error -y -i "$1" -vf "scale=-1:'min(720,ih)'" -ss "$2" -to "$3" -strict -1 -f yuv4mpegpipe - | aomenc - --passes=2 --pass=1 --threads=6 --cpu-used=4 --bit-depth=10 --tile-columns=1 --end-usage=q --lag-in-frames=19 --webm --cq-level=30 --fpf=tmp_hohlogfile.log $extras --output=NUL
+	ffmpeg -hide_banner -loglevel error -y -i "$1" -vf "scale=-1:'min(720,ih)'" -ss "$2" -to "$3" -strict -1 -f yuv4mpegpipe - | aomenc - --passes=2 --pass=2 --threads=6 --cpu-used=4 --bit-depth=10 --tile-columns=1 --end-usage=q --lag-in-frames=19 --webm --cq-level=30 --fpf=tmp_hohlogfile.log $extras --output=tmp_"$1"."$2"-"$3".webm
 	rm tmp_hohlogfile.log
 	ffmpeg -hide_banner -loglevel error -i "$1" -ss "$2" -to "$3" -strict -2 -b:a 96k tmp_hohaudio.opus
 	ffmpeg -hide_banner -loglevel error -i tmp_"$1"."$2"-"$3".webm -i tmp_hohaudio.opus -c:v copy -c:a copy "$1"."$2"-"$3".webm
