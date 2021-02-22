@@ -1,4 +1,11 @@
 #!/bin/bash
+if hash aomenc 2>/dev/null; then
+	echo ""
+else
+	echo "aomenc not fould. Did you install it?"
+	echo "See 'installing aomenc'"
+	exit
+fi
 if [ "$#" -eq 0 ] || [[ $1 == "--help" ]] || [[ $1 == "-help" ]]; then
 	echo "usage:"
 	echo "hohwebm.sh video [start [end [profile [...aom options]]]]"
