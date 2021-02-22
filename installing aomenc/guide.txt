@@ -1,0 +1,31 @@
+For debian/ubuntu, the script "debian.sh" automates this
+
+The process is as following:
+
+1. Make sure you have all the stuff needed to compile the thingy
+
+You need: cmake, make, yasm, gcc, perl
+All of those probably have that exact name in your package manager
+
+2. Download the code
+
+git clone --depth 1 https://aomedia.googlesource.com/aom
+
+3. Make a target directory
+
+mkdir aom_build
+
+4. Go inside the target and configure
+
+cd aom_build && cmake ../aom
+
+5. Compile and pray
+
+make
+
+6. Make the compiled binary available
+
+sudo cp aomenc /usr/local/bin/aomenc
+
+(and the decoder too, if you want it)
+sudo cp aomdec /usr/local/bin/aomdec
