@@ -32,6 +32,20 @@ parameters:
   ...aom options :  every other option is passed to aomenc as a parameter. Overrides profile defaults.
 ```
 
+# Advanced
+
+Useful aom flags:
+```
+--cq-level=30
+```
+Quality←→size tradeoff, 0-63, 30 is the default. Higher means smaller files, lower quality, smaller means larger files, higher quality.
+
+```
+--cpu-used=4
+```
+Speed←→size tradeoff, 0-6, 4 is the default. Higher means faster encoding, larges files, smaller means slower encoding, smaller files.
+
+
 # Limitations
 
 - No subtitles (TODO)
