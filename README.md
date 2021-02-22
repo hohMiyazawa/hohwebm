@@ -1,4 +1,4 @@
-Skoll3 managed to get AV1 into mpv-webm, so that's probably easier to use: https://github.com/hohMiyazawa/Skoll3webm
+Skoll3 managed to get AV1 into mpv-webm, so that's probably easier to use: https://github.com/Calve33/Skoll3webm
 
 # hohwebm (work in progress)
 AV1 webms with less headache
