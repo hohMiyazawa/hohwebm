@@ -7,15 +7,23 @@ A bash script for encoding AV1 clips
 - ffmpeg (sudo apt install ffmpeg)
 - aomenc (see 'installing aomenc')
 
-# usage
+# Install
+
+Place in PATH, for instance in:
+```
+sudo cp hohwebm.sh /usr/local/bin/hohwebm.sh
+```
+
+# Usage
 
 ```
 hohwebm.sh video [start [end [profile [...aom options]]]]
 ```
 example:  
 ```
-hohwebm.sh anime\\ ep1.mkv 10:23 10:30.2 anilist
+hohwebm.sh anime\ ep1.mkv 10:23 10:30.2 anilist
 ```
+
 parameters:  
 ```
   start          :  timestamp
